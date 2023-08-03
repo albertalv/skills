@@ -3,6 +3,7 @@ from . import views
 from .views import vista, vistaCheckout, vistaExitoso, subirVideo, vistaInicio, vistaDePerfil, vistaDePrueba, crearCat, verAdmin, eliminarCat, eliminarTipoDenuncia, crearTipoDenuncia, elegirCat,obtenerTokens, contenido, nuevo, crudDeUsuario, paginaPrincipal, editarTipoDenuncia, editarNombre, editarApellido, editarCategoria, administradorCategoria, elegirSexo, elegirPrecioCanal
 from .views import room
 urlpatterns= [
+    path('canal/<str:room_name>/', room.as_view(), name='room'),
     path('lobby/', vista.as_view(), name='lobby'),
     #path('room/', views.room, name='cuarto'),
     path('get_token/', views.getToken, name='get_token'),
@@ -26,7 +27,6 @@ urlpatterns= [
     path('nosotros/', views.nosotros, name="nosotros"),
     path('categoryas/', views.categorias, name="categorias"),
     path('canal/', views.previo, name='canal'),
-    path('canal/<str:room_name>/', room.as_view(), name='room'),
     path('checkout/<int:paquete_id>/', vistaCheckout.as_view(), name='checkout'),
     path('graciasPorTuCompra/', vistaExitoso.as_view(), name ="exitoso"),
     path('subirVideo/', subirVideo.as_view(), name = 'subirVideo' ), 

@@ -40,6 +40,7 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, ConexionSerializer, CategoriaSerializer, TokenSerializer, PaqueteSerializer
 from django.contrib.auth import authenticate, login
 from .models import masUsuario
+from django.utils.functional import wraps
 connected = False
 # Create your views here.
 def getToken(request):
@@ -396,6 +397,15 @@ class subirVideo(View):
             videos.objects.create(user=request.user, videos=file_name)
                 
             return redirect('profile')
+
+def optional_login_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect('login')
+    return _wrapped_view
 
 class vistaDePerfil(View):
     @method_decorator(csrf_exempt,login_required)
