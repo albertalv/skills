@@ -1,0 +1,188 @@
+{%extends 'base/base.html'%}
+{%block content%}
+<!-- MAIN BODY -->
+<main class="h-full overflow-y-auto">
+  <div class="titlee flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900" style="overflow-y: scroll;">
+    <h2 >RECLAMA TUS TOKENS</h2>
+
+  </div>
+  <div class="bodd grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+    <form id="formularioTokens" method="POST" action="{% url 'obtenerTokens' %}">
+      {% csrf_token %}
+     
+      <input type="number" id="tokens"  value = {{saldo}} name="tokens"  min="1">
+      
+      <button 
+        class="btn-neon text-white text-gray-700 dark:text-gray-400" 
+        type="submit"
+      >
+      <span id="span1"></span>
+      <span id="span2"></span>
+      <span id="span3"></span>
+      <span id="span4" ></span>
+        Continuar
+      </button>
+    
+    </form>
+  </div>
+
+  
+
+</main>
+
+<style>
+  #tokens {
+    display: none;
+  }
+  
+  .bodd{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 20vh;
+    
+  }
+  .titlee{
+    min-height: 50vh;
+  }
+  h2{
+    position: relative;
+    font-size: 5.5em;
+    letter-spacing: 15px;
+    color: #7e3af2;
+    text-transform: uppercase;
+    width: 100%;
+    text-align: center;
+    padding: 15px 10px;
+    -webkit-box-reflect : below 1px linear-gradient(transparent , #0004);
+    line-height: 0.70em;
+    outline: none;
+    animation: animate 3s linear infinite;
+  }
+  .btn-neon{
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    color: #fff;
+    letter-spacing: 4px;
+    text-decoration: none;
+    font-size: 24px;
+    overflow: hidden;
+    transition: 0.2s;
+  }
+  .btn-neon:hover{
+      background: #a945c7;
+      box-shadow: 0 0 10px #7e3af2, 0 0 40px #7e3af2, 0 0 80px #7e3af2;
+      transition-delay: 1s;
+  }
+  .btn-neon span{
+      position: absolute;
+      display: block;
+  }
+  #span1{
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent,#7e3af2);
+  }
+  .btn-neon:hover #span1{
+      left: 100%;
+      transition: 1s;
+  }
+  #span3{
+      bottom: 0;
+      right: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(270deg, transparent,#7e3af2);
+  }
+  .btn-neon:hover #span3{
+      right: 100%;
+      transition: 1s;
+      transition-delay: 0.5s;
+  }
+  #span2{
+      top: -100%;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(180deg,transparent,#7e3af2);
+  }
+  .btn-neon:hover #span2{
+      top: 100%;
+      transition: 1s;
+      transition-delay: 0.25s;
+  }
+  #span4{
+      bottom: -100%;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(360deg,transparent,#7e3af2);
+  }
+  .btn-neon:hover #span4{
+      bottom: 100%;
+      transition: 1s;
+      transition-delay: 0.75s;
+  }
+  @keyframes animate{
+    0%,18%,20%,50.1%,60%,65.1%,80%,90.1%,92%{
+      color: #7e3af2;
+      text-shadow: none;
+    }
+    18.1%,20.1%,30%,50%,60.1%,65%,80.1%,90%,92.1%,100%{
+      color: #fff;
+      text-shadow: 0 0 10px #9061f9,
+                  0 0 20px #9061f9,
+                  0 0 40px #9061f9,
+                  0 0 80px #9061f9,
+                  0 0 160px #9061f9;
+
+    }
+  }
+
+
+</style>
+
+
+
+<script>
+ 
+ document.getElementById("formularioTokens").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  try {
+    let hostId = "{{user.id}}";
+    let tokens = parseInt(document.getElementById("tokens").value, 10);
+    const csrfToken = document.getElementsByName('csrfmiddlewaretoken')[0].value;
+
+    let data = {
+      tokens: tokens,
+      hostId: hostId,
+      csrfmiddlewaretoken: csrfToken
+    };
+
+    const response = await fetch('/obtenerTokens/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      },
+      body: JSON.stringify(data)
+    });if (response.ok) {
+            console.log("Actualización de tokens exitosa");
+            history.replaceState(null, "", "/accounts/profile");
+            window.location.href = '/accounts/profile/';  
+        } else {
+            console.log("No se pudo realizar la actualización de tokens");
+        }
+    } catch (error) {
+        console.log("Error en la actualización de tokens");
+    }
+});
+
+</script>
+
+
+{%endblock%}

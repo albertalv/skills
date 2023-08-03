@@ -1,0 +1,24 @@
+<div style=" width: 600px;margin-top: 200px; margin-left: 650px;">
+    <h1>Solo un paso más antes de comenzar</h1>
+</div>
+<div style="border-color: black; border: 1px solid black; width: 300px;margin-top: 100px; margin-left: 800px;">
+    
+    <h1>Elige tu categoria</h1>
+    <div style="margin-left: 100px;">
+        <select name="" id="">
+            {% for categoria in cat %}
+                <option value="{{categoria.nombreCategoria}}" name = "{{categoria.nombreCategoria}}">{{categoria.nombreCategoria}}</option>
+            {%endfor%}
+            </select>
+    </div>
+    
+    <br>
+    <br>
+    <div style="margin-left: 120px;">
+        <form method="POST" action="{% url 'elegirCategoria' %}">
+            {% csrf_token %}
+            <button>Guardar</button>
+          </form>
+    </div>
+    
+</div>

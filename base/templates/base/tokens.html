@@ -1,0 +1,196 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<style>
+    .paquete {
+      flex-direction: row;
+      color: aliceblue;
+      flex-basis: 33%;
+      text-align: center;
+      border-color: aliceblue;
+      border-style: solid;
+    }
+    .btn-container {
+    display: flex;
+    margin-top: auto; 
+    flex-direction: column;
+    flex-basis: 20%;
+  }
+
+  .contenido{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 80%;
+    text-align: center;
+    padding-bottom: 10px;
+  }
+</style>
+
+
+
+<main class="h-full overflow-y-auto">
+  <div class="container px-6 mx-auto grid">
+    <!--TITULO-->
+    <h1 class="my-6 text-2xl font-semibold text-gray-800 dark:text-gray-200">
+      PAQUETES DE TOKENS
+    </h1>
+    <!--PAQUETES
+    <div id="contenedor" style="background-color: rgb(159, 142, 170); display: flex; border-radius: 2%; padding: 1rem;">
+    -->
+
+    <div class="contenedor w-full  gap-6 mb-8 md:grid-cols-2" style="grid-template-columns: repeat(3,minmax(0,1fr));">
+      {% for paquete in paquetes %}
+      <div class="paquete my-6 grid gap-6">
+        <img class="card-img" src="{% static 'images/tokens-buy.jpg' %}" alt="">
+        
+        <div class="card-body">
+          <h1 class="card-title text-gray-700 dark:text-gray-100">Paquete </h1>
+          <p class="card-subtitle my-6 text-1xl font-semibold text-gray-700 dark:text-gray-100">
+            {{ paquete.saldo }} tokens por {{ paquete.precio }} MXN
+
+          </p>
+          <p class="card-info">Moneda virtual en streams; compra para apoyar a creadores y desbloquear recompensas exclusivas.</p>
+          
+          
+          <a
+            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            href="{% url 'checkout' paquete.id %}"          
+          >
+            Comprar
+          </a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    
+  </div>
+
+  
+
+
+
+  
+</main>
+<style>
+  .contenedor{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .paquete{
+    display: flex;
+    flex-wrap: wrap;
+    width: 320px;
+    height: 500px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: 8px solid rgb(78, 76, 82);
+    position: relative;
+    gap: .5rem;
+  }
+  .card-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px;
+
+  }
+  .card-body{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: -100%;
+    position: absolute;
+    background: #1f3d4738;
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    color: #fff;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: .5s;
+  }
+  .paquete:hover .card-body{
+    right: 0;
+  }
+  .card-title{
+    text-transform: uppercase;
+    font-size: 50px;
+    font-weight: 500;
+  }
+  .card-subtitle{
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: 300;
+  }
+  .card-info{
+    font-size: 16px;
+    line-height: 25px;
+    margin: 40px 0;
+    font-weight: 400;
+  }
+  .card-btn{
+    color: #1f3d4738;
+    background: #8fabba;
+    padding: 10px 20px;
+    width: 120px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    border: none;
+    outline: none;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  @media (max-width: 1080px){
+    .paquete{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .card-img{
+      width: 100%;
+      height: 100%;
+    }
+    .card-title{
+      font-size: 25px;
+    }
+    .card-subtitle{
+      font-size: 12px;
+    }
+    .card-info{
+      font-size: 12px;
+      margin: 20px 0;
+      font-weight: 400;
+    }
+    
+  }
+</style>
+
+
+<script>
+	document.getElementById("formularioTokens").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  try {
+
+    ltokens = parseInt(document.getElementById("tokens").value, 10) // Obtener el valor del campo
+
+    let data = {
+      tokens: tokens
+    };
+    const response = await fetch('/lobby/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+  } catch (error) {
+    console.log("No se pudo realizar la insercion");
+  }
+});
+</script>
+{% endblock %}
+</html>

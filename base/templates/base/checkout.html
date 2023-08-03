@@ -1,0 +1,201 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<body>
+    
+
+    <div class="container grid px-6 mx-auto" style="margin-top: 15rem;">
+        <div class="card" style="display: flex; flex-basis: 50%;">
+            <video class="card-img" autoplay loop controls width="100%" height="auto">
+                <source src="{% static 'vids/token.mp4' %}" type="video/mp4">
+            </video>
+            
+
+            <div class="card-body">
+              <h1 class="card-title">Paquete 1</h1>
+              <p class="card-subtitle">{{paquete.saldo}} tokens por {{paquete.precio}} pesos</p>
+              <p class="card-info">Moneda virtual en streams; compra para apoyar a creadores y desbloquear recompensas exclusivas.</p>
+              
+            </div>
+        </div>
+        <div id="paypal-button-container" 
+            data-precio="{{paquete.precio}}" 
+            data-tokens="{{paquete.saldo}}"
+            data-lobby-url="{% url 'lobby' %}" 
+            style="display: flex; flex-basis: 50%; margin-top: 100px; padding: 5rem;">
+        </div>
+
+    </div>
+    <style>
+
+        .card{
+          width: 320px;
+          height: 700px;
+          border-radius: 20px;
+          overflow: hidden;
+        
+          position: relative;
+        }
+        .card-img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 15px;
+    
+        }
+        .card-body{
+          width: 100%;
+          height: 100%;
+          top: 0;
+          right: 0;
+          position: absolute;
+          background: #1f3d4738;
+          backdrop-filter: blur(5px);
+          border-radius: 15px;
+          color: #fff;
+          padding: 30px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          transition: .5s;
+        }
+       
+        .card-title{
+          text-transform: uppercase;
+          font-size: 50px;
+          font-weight: 500;
+        }
+        .card-subtitle{
+          text-transform: capitalize;
+          font-size: 14px;
+          font-weight: 300;
+        }
+        .card-info{
+          font-size: 16px;
+          line-height: 25px;
+          margin: 40px 0;
+          font-weight: 400;
+        }
+        .card-btn{
+          color: #1f3d4738;
+          background: #8fabba;
+          padding: 10px 20px;
+          width: 120px;
+          border-radius: 5px;
+          text-transform: capitalize;
+          border: none;
+          outline: none;
+          font-weight: 500;
+          cursor: pointer;
+        }
+    
+    </style>
+    <style>
+        .paquete {
+            flex-direction: row;
+            color: aliceblue;
+            flex-basis: 33%;
+            text-align: center;
+            border-color: aliceblue;
+            border-style: solid;
+        }
+        .contenido{
+            display: flex;
+            flex-direction: column;
+            flex-basis: 80%;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+    </style>
+    <!--
+    <div id="contenedor" style="display: flex; padding-top: 20px;">
+        <div id="contenedorPaquete" style="display: flex; flex-basis: 50%; ">
+            
+            
+                
+                <div class="contenido" style="background-color: black; color: white;">
+                    <h2>Paquete 1</h2>
+                    <h3>{{paquete.saldo}} tokens por {{paquete.precio}} pesos</h3>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae magnam reiciendis quibusdam voluptas autem harum voluptatem neque! Pariatur culpa, blanditiis perspiciatis tenetur maxime provident ex fugiat porro vel expedita ratione eveniet quis doloribus esse, repellendus nihil praesentium quidem error laborum deserunt cum voluptatibus voluptatum. Quae provident ullam incidunt molestiae reiciendis obcaecati quibusdam. Rerum libero quis, fugiat deleniti ut temporibus nisi magni. Rerum autem maiores perferendis perspiciatis quia omnis facere similique blanditiis molestias nostrum facilis magni eum, nam molestiae iure quos eligendi, ratione natus saepe aut? Fugit qui obcaecati iste. Suscipit eius aliquam impedit? Consequuntur fugiat eveniet dolorum beatae explicabo, officiis commodi dolores, id magnam soluta et eligendi eos. Sed neque natus hic assumenda, veritatis ratione odit quae cum modi, dicta, itaque dolore vel explicabo ab cumque dolor amet consequatur? Dicta dolorum provident, omnis minus asperiores eaque quod, accusamus magni blanditiis ipsum illum tempora aliquam id aperiam necessitatibus esse, numquam cumque.
+                </div>
+               
+            
+        </div>
+        <div id="paypal-button-container" data-precio="{{paquete.precio}}" data-tokens="{{paquete.saldo}}"data-lobby-url="{% url 'lobby' %}" style="display: flex; flex-basis: 50%; margin-top: 300px;"></div>
+    </div>
+    -->
+    <!-- Set up a container element for the button -->
+    
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AS5gHjW-Q6DLRJUrQVBz_GcF1YFfM0xF9Qw2UGWAgOJqQE_oA4YlZDheIn9bPHjxTJodQAC8oJMruumk&currency=USD"></script>
+
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        let precioGlobal = "{{paquete.precio}}"
+        let container = document.getElementById('paypal-button-container');
+        console.log(precioGlobal)
+        let tokens = "{{paquete.saldo}}"
+        let lobbyUrl = container.dataset.lobbyUrl;
+      let check = async()=> {
+        try {
+    
+	tokens = parseInt(tokens, 10);
+
+    let data = {
+      tokens: tokens
+    };
+    const response = await fetch('http://localhost:8000/lobby/', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json', 
+        
+      },
+      body: JSON.stringify(data)
+    });
+    if (response.ok) {
+            console.log("hola")
+          
+        } else {
+            console.log("No se pudo realizar la inserción");
+        }
+  } catch (error) {
+    console.log("No se pudo realizar la insercion");
+  }
+      }  
+
+        paypal.Buttons({
+    
+            style: {
+                color: 'blue',
+                shape: 'pill',
+                label: 'pay',
+                height: 40
+            },
+           
+            createOrder: function(data, actions) {
+                let precioGlobal = "{{paquete.precio}}"
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '1.0'
+                        }
+                    }]
+                });
+            },
+            // Call your server to set up the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    check()
+                    let url = "{% url 'lobby' %}?tokens=" + encodeURIComponent(tokens)
+                    window.location.href = url;
+                    alert('Transaction completed by ' + details.payer.name.given_name + '!');
+                });
+            }
+    
+        }).render('#paypal-button-container');
+    </script>
+    {% endblock %}
+
+

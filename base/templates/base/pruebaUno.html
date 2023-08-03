@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        table {
+          border-collapse: collapse;
+          width: 1000px;
+          height: 300px;
+          table-layout: fixed;
+        }
+        td, th {
+          
+          padding: 8px;
+          word-wrap: break-word;
+        }
+        
+      </style>
+      <button id="boton">Contenido Uno</button>
+      <button id="botonDos">Contenido Dos</button>
+      <table>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <div id="contenedor">
+                  
+                </div>
+              </td>
+        </tr>
+      </table>
+      
+      <script type="text/javascript" src="{% static 'js/pruebaFetch.js' %}" ></script>
+</body>
+</html>

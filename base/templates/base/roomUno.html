@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Get started with broadcast streaming</title>
+</head>
+<body>
+    <h2 class="left-align">Iniciar el streaming</h2>
+    <div class="row">
+        <form id="estadoForm">
+            {% csrf_token %}
+            <div>
+                <input type="radio" id="host" name="joinAs" value="host">
+                <label>host</label><br>
+                <input type="radio" id="Audience" name="joinAs" value="audience">
+                <label>Audience</label><br>
+                <button type="button" id="join" onclick="cambiarEstado()">Iniciar</button>
+                <button type="button" id="leave">Abandonar Streaming</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        function cambiarEstado() {
+            fetch('/cambiar_estado/')
+                .then(response => response.text())
+                .then(html => {
+                    document.documentElement.innerHTML = html;
+                });
+        }
+    </script>
+    <div id="contenedor">
+
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" src="{% static 'assets/AgoraRTC_N-4.17.2.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/streamsUno.js' %}" ></script>
+
+{% endblock %}

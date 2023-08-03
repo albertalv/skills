@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Animación de Texto con Botones</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="{% static '/css/inicioD.css' %}" />
+  
+
+</head>
+<body>
+  <div class="container">
+    <span style="--l: 'S';">S</span>
+    <span style="--l: 'k';">k</span>
+    <span style="--l: 'i';">i</span>
+    <span style="--l: 'l';">l</span>
+    <span style="--l: 'l';">l</span>
+    <span style="--l: 's';">s</span>
+    <span style="--l: ' ';"></span>
+    <span style="--l: '4';">4</span>
+    <span style="--l: ' ';"></span>
+    <span style="--l: 'S';">S</span>
+    <span style="--l: 'k';">k</span>
+    <span style="--l: 'i';">i</span>
+    <span style="--l: 'l';">l</span>
+    <span style="--l: 'l';">l</span>
+    <span style="--l: 's';">s</span>
+  </div>
+
+  <div class="buttons">
+    <a href="{% url 'inicio' %}">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Inicio
+    </a>
+    <a href="{% url 'register' %}">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Registrate
+    </a>
+    <a href="{% url 'nosotros' %}">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Más información
+    </a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+header {
+    background-color: #7e3af2;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .navigation {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .menu {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+  }
+  
+  .menu li a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #7e3af2;
+    border-radius: 4px;
+  }
+  
+  .menu li a:hover {
+    background-color: #0056b3;
+  }
+  
+  .menu li a:active {
+    background-color: #00449e;
+  }
+
+  /* Estilos de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    color: #fff;
+  }
+  
+  /* Estilos del botón "Ver" */
+  .ver-button,
+    .editar-button,
+    .eliminar-button,
+    .agregar-button {
+      padding: 8px 16px;
+      background-color: #7e3af2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .ver-button:hover,
+    .editar-button:hover,
+    .eliminar-button:hover,
+    .agregar-button:hover {
+      background-color: #7e3af2;
+    }
+
+    .agregar-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      background-color: #7e3af2;
+      border-radius: 50%;
+    }
+
+    .agregar-button img {
+      width: 16px;
+      height: 16px;
+      fill: white;
+    }
+  h2{
+    color: #fff;
+  }
+
+  footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #7e3af2;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+  }
+  .agregar-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  

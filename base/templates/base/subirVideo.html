@@ -1,0 +1,116 @@
+ 
+{% load static %}
+
+{%block content%}
+
+    <!-- TITLE -->
+    <div class="w-full containererr" ">
+        <div class="conten">
+            <h1><i class="fa-solid fa-video"></i> MIS VIDEOS </h1>
+            <p>Aqui podras subir y agregar tus videos para que los usuarios puedan acceder a tu contenido.</p>
+            <br>
+            <p>AGREGAR VIDEO</p>
+            <form method="POST" action="{% url 'subirVideo' %}" enctype="multipart/form-data">
+            
+                {% csrf_token %}
+                <input type="file" name="video_file" class="text-sm text-gray-500 opacity-70" style="padding: 1em;">
+                
+                <button type="submit"
+                    class="btn active:bg-purple-600 hover:bg-purple-600 focus:outline-none focus:shadow-outline-purple"
+                >
+                    Subir video
+                </button>
+            </form>
+            
+            <h1><i class="fa-solid fa-play"></i> GRABACIONES </h1> 
+            
+        </div>
+
+    </div>
+    
+
+    
+    <!-- VIDEOS -->
+    <div class="containererr px-6 mx-auto grid">  
+        
+        <div class="video-container" style="display: flex; flex-wrap: wrap;">
+            {% for video in videos %}
+                <video controls style="width: 500px; height: 500px; padding-left: 3px;">
+                    <source src="data:video/webm;base64,{{ video }}" type="video/mp4" >
+                </video>
+            {% endfor %}
+        </div>
+
+    </div>
+    
+    
+    
+
+<style>
+    iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .containererr{
+        background: #17191D;
+        width: 100%;
+        
+    }
+    .conten {
+        padding: 3rem 9% ;
+        background: linear-gradient(90deg,rgb(34, 36, 41), rgba(34, 36, 41, 0.5)), url("htJ8MTqx1RBL2_2Q_lcblG4ymRJBYkx2Lf5rzvZcWm3uPtFS8Swx9KmEZbpS7Q2XqPJt6M1_xuqnU-CYjZQerogZQlO21i-9qXU4Ym21FwgiSOJ8jkpwvcW2-5yOpDEfrqIvZpzbDYT98jkv4LlqZ22igV8NsKExltbHO6boAPeX58zNfi-HCsLmb6Kp7YcWNZKgmr65XJWkFrFWb3n6wyWXFvXO0YxAk24lTuc4XmF6t1c-f7yrc1aujjdI70Wde4vPSn");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;   
+    }
+    .conten h1 {
+        font-weight: 400;
+        font-size: 2.3rem;
+        color: #d8d8d8;
+    }
+    .conten p {
+        max-width: 45rem;
+        color: #d8d8d8;
+        font-size: 1rem;
+        margin: .5rem 0;
+        letter-spacing: .02rem;
+        font-weight: 300;    
+    }
+    .btn {
+        display: inline-block;
+        background: #8a269e;
+        border-radius: .2rem;
+        padding: .4rem 3rem;
+        color: #d8d8d8;
+        margin-top: .5rem;
+        font-size: 1rem;
+        box-shadow: 0.15rem 0.15rem 0.5rem rgba(0, 0, 0, 0.2);
+    }
+    .btn:hover {
+        background: #6a187a;
+    }
+
+    .title1 {
+        padding: 1rem 9% ;
+        color: #d8d8d8;
+        font-weight: 300;
+        font-size: 1.5rem;}
+    .video{ 
+        border: 0.12rem solid #d8d8d8;
+    }
+    .contvideos {
+        padding: 0 5px ;
+        margin: auto;    
+        display: grid;    
+        flex-direction: column;
+    }
+    .grupo2 {
+        background: #222429;
+    }
+</style>
+{%endblock%}
+</html>
+
+
+  

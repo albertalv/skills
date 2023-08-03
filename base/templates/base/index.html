@@ -1,0 +1,280 @@
+{%extends 'base/base.html'%}
+
+{% block head %}
+    {% load static %}
+    <!--MORE LINKS-->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/tailwind.output.css' %}">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" ></script>
+    <script type="text/javascript" src="{% static 'js/init-alpine.js' %}" ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"/> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" ></script>
+    <script type="text/javascript" src="{% static 'js/charts-lines.js' %}" ></script>
+    <script type="text/javascript" src="{% static 'js/charts-pie.js' %}" ></script> 
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static 'css/index-style.css' %}">
+
+    {% endblock %}
+
+{% load static%}
+{%block content%}
+
+<!-- MAIN BODY -->
+<style>
+    .gallery{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .stream-box {
+        width: 30%;
+        padding: 10px;
+        text-align: center;
+    }
+    .stream-box img {
+        border-radius: 50%;
+        width: 150px;
+        height: auto;
+    }
+    .stream-box a{
+        margin-top: 5px;
+    }
+    .users-section::-webkit-scrollbar{
+        width: 7px;
+    }
+    .users-section::-webkit-scrollbar-thumb{
+        background: #7e3af2;
+        border-radius: 5px;
+    }
+
+    .channel-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        padding: 20px;
+    }
+    
+    .card {
+        width: 300px;
+        background-color: #444;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(126, 58, 242, 0.2); /* Color morado para la sombra */
+        overflow: hidden;
+        transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 32px rgba(126, 58, 242, 0.3); /* Color morado oscuro para la sombra al hacer hover */
+    }
+    
+    .card-header {
+        position: relative;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 10px 10px 0 0;
+        transform-style: preserve-3d; /* Evitar que las imágenes se vean borrosas al hacer hover */
+    }
+    
+    .card-header img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .live-badge {
+        position: absolute;
+        top: 4px;
+        right: 2px;
+        padding: 4px 8px;
+        background-color: #ff4d4d;
+        color: #fff;
+        border-radius: 4px;
+        font-weight: bold;
+        opacity: 0.8;
+        transform: scale(0.8);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    
+    .card:hover .live-badge {
+        opacity: 1;
+        transform: scale(1);
+    }
+    
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Alinear contenido en la parte superior */
+        padding: 20px;
+        min-height: 10px; /* Altura mínima del contenido para evitar que el botón se mueva hacia arriba */
+    }
+    
+    .card h3 {
+        font-size: 24px;
+        margin: 0;
+        color: #fff;
+    }
+    
+    .card p {
+        font-size: 16px;
+        color: #ccc;
+        margin-bottom: 15px;
+        flex-grow: 1;
+    }
+    
+    .card-button {
+        display: block;
+        padding: 10px 20px;
+        background-color: #7e3af2; /* Color morado */
+        color: #fff;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: bold;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+    
+    .card-button:hover {
+        background-color: #9a63f8; /* Color morado oscuro al hacer hover */
+        transform: scale(1.08);
+    }
+    
+</style>
+
+
+    <div class="container px-6 mx-auto grid">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">EN VIVO</h2>
+        
+        <!-- VIDEO & CHANNELS  -->
+        <div class="container">
+            
+            <!-- VIDEO  -->
+            <div class="video">
+                <!-- Aquí puedes agregar tu etiqueta de video -->
+                <video autoplay loop controls width="100%" height="auto">
+                    <source src="{% static 'vids/s4s.mp4' %}" type="video/mp4">
+                </video>
+            </div>
+            
+            <!-- CHANNELS  -->
+            <div class="gallery">
+                {% for objeto in estatus %}
+                {% if objeto.estado == 'conectado' %}
+                <div class="stream-box">
+                    <img src="{% static 'images/EnVivo.png' %}" alt="Imagen del stream">
+                    <div class="form-field">
+                        <input type="hidden" name="room" value="{{ objeto.channel }}">
+                    </div>
+
+                    <div class="btn-container my-6 text-2xl font-semibold text-gray-800 dark:text-gray-200" style="font-size: 1zrem;">
+                        <a href="{% url 'canal' %}?room={{ objeto.channel }}" class="btn btn-outline-primary">
+                            {{ objeto.channel }}
+                        </a> 
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                
+            </div>
+        </div>    
+
+
+       
+
+        <!-- USERS -->
+        <h2 class="my-6 text-1xl font-semibold text-gray-700 dark:text-gray-100">CANALES</h2>
+        <div class="users-section" style="display: flex; overflow-x: auto;">
+
+            
+            {%for usuario in usuarios%}
+                {% if not usuario.is_staff %}
+                <div 
+                    style="display: flex; flex-wrap: wrap; flex-direction: row; height: 200px; padding-left: 20px;"
+                    class="my-6 text-1xl font-semibold text-gray-700 dark:text-gray-100"
+                >
+                    <div class="btn-container flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+
+                        <a href="{% url 'perfil' usuario.id %}" class="btn btn-outline-primary">Perfil de {{usuario.username}}</a>
+                    </div>
+                
+                </div>
+                {%endif%}
+            {%endfor%}
+        </div>
+
+        <!-- USER ON LIVE -->
+        
+        <h2 class="my-6 text-1xl font-semibold text-gray-700 dark:text-gray-100 w-full">LIVESTREAMERS EN VIVO</h2>
+        
+        
+        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+
+        </div>
+        <div class="users-section" style="display: flex; overflow-x: auto;">
+            {% for objeto in estatus %}
+            {% if objeto.estado == 'conectado' %}
+            <div class="channel-cards">
+                <div class="card">
+                    <div class="card-header">
+                        <img src="{% static 'images/EnVivo.png' %}" alt="Logo Canal 1">
+                        <div class="live-badge">En Vivo</div>
+                    </div>
+                    <div class="card-content">
+                      <h3>{{ objeto.channel }}</h3>
+                      <p>Entra y disfruta del contenido</p>
+                      <a href="{% url 'canal' %}?room={{ objeto.channel }}"  class="card-button">Ver en vivo</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+            
+        </div>
+
+        <!-- CATEGO  -->
+        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 w-full">
+            <h2 class="my-6 text-1xl font-semibold text-gray-700 dark:text-gray-100">Categorias/Nuevas Habilidades</h2>
+        </div>
+        
+        
+        <!-- Cards -->
+        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+            <!-- Card -->
+            {% for cato in cato %}
+            <div class="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                <div class="p-3 mr-4 text-orange-500 bg-orange-100 rounded-full dark:text-orange-100 dark:bg-orange-500">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+                        {{ cato.nombreCategoria }}
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- FOOTER -->
+    
+
+        
+        
+    
+    </div>
+    
+    
+    
+        
+    
+
+
+{%endblock%}
+
+
+
+
+    
+    
+    

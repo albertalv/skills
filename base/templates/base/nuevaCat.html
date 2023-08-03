@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container px-6 mx-auto grid w-full">
+
+    <h2
+        class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+    >
+        CATEGORÍAS
+    </h2>
+    
+    <!--CATEGORÍAS-->
+    <div class="container px-6 mx-auto grid ">
+        <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4 w-full">
+            <!-- Card -->
+            {% for cato in cato %}
+            <div
+                class="flex items-center p-4 bg-white rounded-lg shadow dark:bg-gray-800"
+            >
+                <div
+                    class="p-3 mr-4 text-teal-500 bg-teal-100 rounded-full dark:text-teal-100 dark:bg-teal-500"
+                >
+                    
+                    
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fill-rule="evenodd"
+                          d="M18 5v8a2 2 0 01-2 2h-5l-5 4v-4H4a2 2 0 01-2-2V5a2 2 0 012-2h12a2 2 0 012 2zM7 8H5v2h2V8zm2 0h2v2H9V8zm6 0h-2v2h2V8z"
+                          clip-rule="evenodd"
+                        ></path>
+                    </svg>
+                      
+                                       
+                  
+                </div>
+                <div>
+                <p
+                    class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400"
+                >
+                    {{ cato.nombreCategoria }}
+                </p>
+                {% for cat in cat %}
+                    {% if cat.category == cato.nombreCategoria %}
+                    <p
+                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                    >
+                        <a href="{% url 'perfil' cat.user_id %}" class="btn btn-outline-primary">{{cat.user}}</a>
+                    </p>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+           
+            
+    
+        </div>
+    </div>
+    
+
+    <!-- CTA 
+    
+
+    {%for categoria in categorias%} 
+        {{categoria.nombreCategoria}}     
+    {%endfor%} 
+
+    <div style="display: flex; flex-direction: row;">
+        {% for cato in cato %}
+            <div style="display: flex; flex-direction: column; margin-right: 20px;">
+                <div>{{ cato.nombreCategoria }}</div><br>
+                {% for cat in cat %}
+                    {% if cat.category == cato.nombreCategoria %}
+                        <div>{{ cat.user }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <div style="display: flex; flex-direction: row;">
+        {% for cato in cato %}
+            <div style="display: flex; flex-direction: column; margin-right: 20px;">
+                <div>{{ cato.nombreCategoria }}</div><br>
+                {% for cat in cat %}
+                    {% if cat.category == cato.nombreCategoria %}
+                        <div>{{ cat.user }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    -->
+</div>
+
+{% endblock %}
+</html>

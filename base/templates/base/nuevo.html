@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="boton">
+        Enviar
+    </button>
+    <script>
+        let boton = document.getElementById("boton").addEventListener("click", async(e)=>{
+            e.preventDefault()
+            
+            fetch('https://api.agora.io/v1/apps/958abc56278c4ce29adc31af9b890932/cloud_recording/acquire', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Basic ' + btoa('2f869e3f2fde447faa8e21e6f55b1c31' + ':' + '641ae5a9aeca4a36a527df0c0e4369d5'),
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    "cname": "CHOCOLATESEXUAL",
+    "uid": "172",
+    "clientRequest": {}
+  })
+})
+  .then(response => response.json())
+  .then(data => {
+    // Manejar la respuesta de la petición
+    console.log(data);
+  })
+  .catch(error => {
+    // Manejar errores de la petición
+    console.error(error);
+  });
+        })
+    </script>
+</body>
+</html>

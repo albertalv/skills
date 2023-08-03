@@ -1,0 +1,147 @@
+{% load static %}
+{% block content %}
+<div class="container px-6 mx-auto grid w-full">
+
+  <!-- FORMS -->
+  <h1 class="my-6 text-1xl font-semibold text-gray-700 dark:text-gray-100 w-full">
+    DATOS PERSONALES
+  </h1>
+  <div class="container px-6 mx-auto grid w-full">
+
+    <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800 w-full">
+      <!-- NAME -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">
+          Nombre
+        </span>
+        <div
+          class="relative text-gray-500 focus-within:text-purple-600"
+        >
+          <form method="POST" action="{% url 'editarNombre' %}">
+            {% csrf_token %}
+            <input  type="text" name="nombre" id="id_nombre" value="{{ usuario.first_name }}"
+              class="block w-full pr-20 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+            />
+            <input type="hidden" value="{{usuario.id}}" name="identificador">
+            <button
+              type="submit"
+              class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+              Guardar
+            </button>
+          </form>  
+        </div>
+      </label>
+
+      <!-- LASTNAME -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">
+          Apellido
+        </span>
+        <div
+          class="relative text-gray-500 focus-within:text-purple-600"
+        >
+          <form method="POST" action="{% url 'editarApellido' %}">
+            {% csrf_token %}
+            <input  type="text" name="apellido" id="id_apellido" value="{{ usuario.last_name }}"
+              class="block w-full pr-20 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+            />
+            <input type="hidden" value="{{usuario.id}}" name="identificador">
+            <button
+              type="submit"
+              class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+              Guardar
+            </button>
+          </form>  
+        </div>
+      </label>
+
+      <!-- SUSCRIPTION -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">
+          Precio por suscripción
+        </span>
+        <div
+          class="relative text-gray-500 focus-within:text-purple-600"
+        >
+          <form method="POST" action="{% url 'elegirPrecioCanal' %}">
+            {% csrf_token %}
+            <input type="number" name="precio" id="id_numero" min="0" max="100" value="{{valu}}"
+              class="block w-full pr-20 mt-1 text-sm text-black dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray form-input"
+            />
+            <input type="hidden" value="{{usuario.id}}" name="identificador">
+            <button
+              type="submit"
+              class="absolute inset-y-0 right-0 px-4 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-r-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            >
+              Guardar
+            </button>
+          </form>  
+        </div>
+      </label>
+
+      <!-- GENDER -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">
+          Género
+        </span>
+        <form method="POST" action="{% url 'elegirSexo' %}">
+          {% csrf_token %}
+          <input type="hidden" value="{{usuario.id}}" name="identificador">
+          
+            <select name="sex"
+              class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+    
+            >
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+            </select>
+            <button 
+              style="margin-top: 5px;"
+              class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+              type="submit">Guardar
+            </button> 
+        
+        </form>
+      </label>
+
+      <!-- CATEGORY -->
+      <label class="block mt-4 text-sm">
+        <span class="text-gray-700 dark:text-gray-400">
+          Categoría
+        </span>
+        <form action="{% url 'editarCategoria' %}" method="post">  
+          <input type="hidden" value="{{usuario.id}}" name="identificador">        
+          <select name="categoria" id="categoria"
+            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
+    
+          >
+            {% for cat in cat %}
+              {% if cat.nombreCategoria == cate.category %}
+                <option value="{{ cat.nombreCategoria }}" selected>{{ cat.nombreCategoria }}</option>
+              {% else %}
+                <option value="{{ cat.nombreCategoria }}">{{ cat.nombreCategoria }}</option>
+              {% endif %}
+            {% endfor %}
+            
+          </select>
+          <button 
+            style="margin-top: 5px;"
+            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+            type="submit">Guardar
+          </button> 
+        
+        </form>
+      </label>
+      
+     
+
+      
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+</html>

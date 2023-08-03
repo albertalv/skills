@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<header>
+    <nav>
+        <ul>
+            <p><a href= {% url 'inicio' %}>Inicio</a></p>
+            <p><a href="#">Acerca de</a></p>
+            <p><a href="#">Servicios</a></p>
+            {%if request.user.is_authenticated%}
+                <p><a href= {% url 'exit' %}>Salir</a></p>
+            {%else%}
+                <p><a href= {% url 'loginDos' %}>Ingresar</a></p>
+                <p><a href="#">Registrarse</a></p>
+            {%endif%}
+
+        </ul>
+      </nav>
+</header>
+<body>
+    
+    {% block content %}
+    {% endblock %}   
+          
+</body>
+</html>
+
+
+por si acaso este va en index para poder redirigir a alguien 
+<main>
+
+    <section id="form-container">
+
+      
+        
+        <form id="form">
+            
+            <div class="field-wrapper">
+                
+                
+
+
+                <div class="form-field">
+                    <input type="submit" value="Únete al streaming" />
+                </div>
+                
+            </div>
+        </form>
+    </section>
+</main>
+
+
+<script>
+let form = document.getElementById('form')
+
+let displayName = sessionStorage.getItem('display_name')
+
+if(displayName){
+form.name.value = displayName
+}
+
+form.addEventListener('submit', (e) => {
+e.preventDefault()
+
+sessionStorage.setItem('display_name', e.target.name.value)
+let room = e.target.room.value.toUpperCase()
+let inviteCode = e.target.room.value
+if(!inviteCode){
+    inviteCode = String(Math.floor(Math.random() * 10000))
+}
+sessionStorage.setItem('room', room)
+let url = `/canal/${room}?name=${name}`;
+let link = document.createElement('a');
+link.href = url;
+
+// Si deseas que el enlace se abra en una nueva pestaña
+
+
+link.click();
+})
+</script>
+
+
+
+
+
+
+
+    
