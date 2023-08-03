@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-$a=f=%tb$ymkq2q1%cf2_t$#je*90u9*1-9@(38d9c(67u6hc&
 DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://skills4skills.lat','https://127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
