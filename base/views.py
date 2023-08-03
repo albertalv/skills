@@ -146,29 +146,32 @@ def exit(request):
     logout(request)
     return redirect('inicio')
 
-class custom_login(View):
+class CustomLoginView(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-    
+
     def get(self, request):
-        if request.method == 'POST':
-            form = LoginForm(request.POST)
-            if form.is_valid():
-                username = form.cleaned_data['username']
-                password = form.cleaned_data['password']
-                user = authenticate(request, username=username, password=password)
-                if user is not None:
-                    login(request, user)
-                    if user.is_superuser:
-                        return redirect('admin_profile')
-                    else:
-                        return redirect('profile')
+        form = LoginForm()
+        return render(request, 'registration/login.html', {'form': form})
+
+    def post(self, request):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                if user.is_superuser:
+                    return redirect('admin_profile')
                 else:
-                    return redirect('login')  
+                    return redirect('profile')
+            else:
+                return redirect('login')
         else:
             form = LoginForm()
-        return render(request, 'registration/login.html', {'form': form})
+            return render(request, 'registration/login.html', {'form': form})
 
 def register(request):
     if request.method == 'POST':
