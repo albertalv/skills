@@ -146,7 +146,7 @@ def exit(request):
     logout(request)
     return redirect('inicio')
 
-class CustomLoginView(View):
+class custom_login(View):
     @method_decorator(csrf_exempt)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
