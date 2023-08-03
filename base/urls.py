@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import vista, vistaCheckout, vistaExitoso, subirVideo, vistaInicio, vistaDePerfil, vistaDePrueba, crearCat, verAdmin, eliminarCat, eliminarTipoDenuncia, crearTipoDenuncia, elegirCat,obtenerTokens, contenido, nuevo, crudDeUsuario, paginaPrincipal, editarTipoDenuncia, editarNombre, editarApellido, editarCategoria, administradorCategoria, elegirSexo, elegirPrecioCanal
+from .views import vista, vistaCheckout, vistaExitoso, subirVideo, vistaInicio, vistaDePerfil, vistaDePrueba, crearCat, verAdmin, eliminarCat, eliminarTipoDenuncia, crearTipoDenuncia, elegirCat,obtenerTokens, contenido, nuevo, crudDeUsuario, paginaPrincipal, editarTipoDenuncia, editarNombre, editarApellido, editarCategoria, administradorCategoria, elegirSexo, elegirPrecioCanal,custom_login
 from .views import room
 urlpatterns= [
     path('canal/<str:room_name>/', room.as_view(), name='room'),
@@ -13,7 +13,7 @@ urlpatterns= [
     path('inicio/', vistaInicio.as_view(), name='inicio'),
     path('accounts/profile/', views.profile, name='profile'),
     path('logout/', views.exit, name='exit'),
-    path('loginDos/', views.custom_login, name="loginDos"),
+    path('loginDos/', custom_login.as_view(), name="loginDos"),
     path('accounts/admin_profile/', views.admin_profile, name='admin_profile'),
     path('register/',views.register, name='register'),
     path('crud_user/',crudDeUsuario.as_view(), name='crud_user'),
