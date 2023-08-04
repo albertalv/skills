@@ -417,7 +417,7 @@ def optional_login_required(view_func):
     return _wrapped_view
 
 class vistaDePerfil(View):
-    @method_decorator(csrf_exempt,login_required)
+    @method_decorator(csrf_exempt,optional_login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
     
