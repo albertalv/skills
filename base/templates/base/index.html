@@ -251,6 +251,15 @@
                     <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
                         {{ cato.nombreCategoria }}
                     </p>
+                    {% for cat in cat %}
+                    {% if cat.category == cato.nombreCategoria %}
+                    <p
+                        class="text-lg font-semibold text-gray-700 dark:text-gray-200"
+                    >
+                        <a href="{% url 'perfil' cat.user_id %}" class="btn btn-outline-primary">{{cat.user}}</a>
+                    </p>
+                    {% endif %}
+                {% endfor %}
                 </div>
             </div>
             {% endfor %}
