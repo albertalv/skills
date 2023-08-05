@@ -184,18 +184,20 @@
         <!-- USERS -->
         <h2 class="my-6 text-1xl font-semibold text-gray-700 dark:text-gray-100">CANALES</h2>
         <div class="users-section" style="display: flex; overflow-x: auto;">
-            <div class="users-section" style="display: flex; flex-wrap: wrap;">
+
+            
+            <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 20px;">
 
                 {% for usuario in usuarios %}
                     {% if not usuario.is_staff %}
-                        <div class="btn-container flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800">
+                        <div class="btn-container flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800" style="max-width: 200px;">
                             <a href="{% url 'perfil' usuario.id %}" class="btn btn-outline-primary">Perfil de {{usuario.username}}</a>
                         </div>
                     {% endif %}
                 {% endfor %}
-            
+        
             </div>
-            
+        </div>
 
         <!-- USER ON LIVE -->
         
